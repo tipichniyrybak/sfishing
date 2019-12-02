@@ -1,6 +1,3 @@
-
-
-
 import psycopg2
 from psycopg2 import Error
 
@@ -8,11 +5,11 @@ class DB():
 
     def query(query_str):
         try:
-            connection = psycopg2.connect(user="ezfhdiiyfyfnul",
-                                          password="0ebccaa759c4eb556fca9dd7fc7573e8a07d24989872d376fcc32e98e85b33e7",
-                                          host="ec2-54-75-235-28.eu-west-1.compute.amazonaws.com",
+            connection = psycopg2.connect(user="gzszrrxcjdobkb",
+                                          password="41aced1ba593952a5acfbb4fc26346adcdf6637bbc8b94d8ab1a18a6d1fac35c",
+                                          host="ec2-54-228-246-214.eu-west-1.compute.amazonaws.com",
                                           port="5432",
-                                          database="d3l35hvgdquvnm")
+                                          database="d15h7ch0tposfh")
             connection.autocommit = True
             cursor = connection.cursor()
             print(query_str)
