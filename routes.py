@@ -32,3 +32,7 @@ def login():
 @fl_app.route('/workspace', methods=['GET', 'POST'])
 def workspace():
     return render_template('workspace.html')
+
+@fl_app.route('/map')
+def map():
+    return render_template('map.html')
