@@ -1,6 +1,9 @@
 from flask import Flask
+from config import Config
 
 fl_app = Flask(__name__)
+fl_app.config.from_object(Config)
+
 
 from routes import *
 
