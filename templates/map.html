@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=18f62a6d-77ff-4bb8-8f46-3b6d164fdf4d&lang=ru_RU" type="text/javascript"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/libs/jquery.js') }}"></script>
-    <script type="text/javascript">
-        ymaps.ready(function () {
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://api-maps.yandex.ru/2.1/?apikey=18f62a6d-77ff-4bb8-8f46-3b6d164fdf4d&lang=ru_RU" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/libs/jquery.js') }}"></script>
+        <script type="text/javascript">
+            ymaps.ready(function () {
 
-            console.log('llll');
+                console.log('llll');
 
-            var PlacemarkArray = [];
+                var PlacemarkArray = [];
 
-            var map = new ymaps.Map('map', {
-                center: [59.939095, 30.315961],
-                zoom: 10,
-                controls: []
+                var map = new ymaps.Map('map', {
+                    center: [59.939095, 30.315961],
+                    zoom: 10,
+                    controls: []
+                });
+                console.log(map);
             });
-            console.log(map);
-        });
-    </script>
-</head>
-<body>
-    <div id="map" style="margin:auto; width: 100%; height: 100%"></div>
-    <p>-------------------</p>
-</body>
+        </script>
+    </head>
+    <body>
+        <div id="map" style="margin:auto; width: 100%; height: 100%"></div>
+        <p>-------------------</p>
+    </body>
 </html>
