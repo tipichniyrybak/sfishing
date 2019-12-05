@@ -18,6 +18,7 @@
   font-size: 20px;
   text-align: center;
   position: relative;
+  height: 100%;
 }
 
 /* .flex:after {
@@ -37,6 +38,7 @@
 
 .map {
   flex-basis: 60%;
+  height:100%;
 
 }
 
