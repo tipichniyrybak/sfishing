@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   font-family: arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -17,8 +18,7 @@
   color: black;
   font-size: 20px;
   text-align: center;
-  position: relative;
-  height: 100%;
+  position: absolute;
 }
 
 /* .flex:after {
@@ -38,7 +38,6 @@
 
 .map {
   flex-basis: 60%;
-  height:100%;
 
 }
 
