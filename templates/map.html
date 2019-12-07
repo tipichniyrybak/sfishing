@@ -17,6 +17,25 @@
             });
             console.log(map);
 
+            var places_array = {{places | tojson}};
+            console.log(places_array);
+            places_array.forEach(function(element) {
+                console.log(element[1]);
+                var myPlacemark1 = new ymaps.Placemark([element[2], element[3]], {
+                    iconContent: element[1]
+                }, {
+                    preset: 'islands#darkOrangeStretchyIcon'
+                });
+                myPlacemark1.events.add(['click'],  function (e) {
+                    var url = '/content.html?fname=' + element[1];
+                    parent.document.getElementById('contentFrameID').contentWindow.location = url;
+                    parent.document.getElementById('controlsFrameID').contentDocument.getElementById("add_order_form").style.display="block";
+
+                });
+                PlacemarkArray.push(myPlacemark1);
+                map.geoObjects.add(myPlacemark1);
+            });
+
 
 
         });

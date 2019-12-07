@@ -35,4 +35,5 @@ def workspace():
 
 @fl_app.route('/map')
 def map():
-    return render_template('map.html')
+    rec = DB.query("SELECT * FROM fishing_places")
+    return render_template('map.html', places = rec)
