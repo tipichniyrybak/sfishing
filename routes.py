@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, request, url_for
 from __init__ import fl_app
-from forms import LoginForm    # RegistrationForm, SendForm
+from forms import LoginForm, AddPlaceForm    # RegistrationForm, SendForm
 from db_adapter import DB
 import os
 import datetime
@@ -35,8 +35,13 @@ def workspace():
 
 @fl_app.route('/map')
 def map():
-    return render_template('map.html')
+    rec = DB.query("SELECT * FROM fishing_places")
+
+    return render_template('map.html', places=rec)
 
 @fl_app.route('/controls')
 def controls():
-    return render_template('controls.html')
+    add_place_form = AddPlaceForm()
+    if add_place_form.validate_on_submit():
+        print('add_base!!')
+    return render_template('controls.html', form=add_place_form)

@@ -5,22 +5,33 @@
 
 </head>
 <body>
-    <form enctype="multipart/form-data" method="post" id="add_base_form">
-        <p>Название базы: <input type="text" id="base_name" /></p>
-        <p>lant: <input type="text" id="lant" /></p>
-        <p>long: <input type="text" id="long" /></p>
-        <p>descr: <input type="text" id="description" /></p>
-        <input type="file"  id="upload_images" min="1" max="999" name="userFile[]" multiple="true" />
-        <p><input type="submit" value="Добавить базу" id="addbaseID" name="addbase" /></p>
-    </form>
-    <hr>
+    {% block content %}
+      <form action="" method="post" novalidate>
+          {{ form.hidden_tag() }}
+          <p>
+              {{ form.name.label }}<br>
+              {{ form.name(size=32) }}
+          </p>
+          <p>
+              {{ form.lant.label }}<br>
+              {{ form.lant(size=32) }}
+          </p>
+          <p>
+              {{ form.long.label }}<br>
+              {{ form.long(size=32) }}
+          </p>
+          <p>
+              {{ form.description.label }}<br>
+              {{ form.description(size=32) }}
+          </p>
+          <p>
+              {{ form.photos.label }}<br>
+              {{ form.description(size=32) }}
+          </p>
 
-    <form style="display:none" enctype="multipart/form-data" method="post" id="add_order_form">
-        <p>Название отчета: <input type="text" id="order_name" /></p>
-        <p>Место: <input type="text" id="place" /></p>
-        <p>текст очета: <input type="text" id="text_order" /></p>
-        <input type="file"  id="upload_order_images" min="1" max="999" name="order_images[]" multiple="true" />
-        <p><input type="submit" value="Добавить отчет" id="addorderID" name="addorder" /></p>
-    </form>
+
+          <p>{{ form.submit() }}</p>
+      </form>
+    {% endblock %}
 </body>
 </html>

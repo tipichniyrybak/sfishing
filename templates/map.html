@@ -16,6 +16,26 @@
                 controls: []
             });
             console.log(map);
+            var places = {{ places|tojson }};
+            console.log(places);
+
+            places.forEach(function(element) {
+                            console.log(element[1]);
+                            var myPlacemark1 = new ymaps.Placemark([element[2], element[3]], {
+                                iconContent: element[1]
+                            }, {
+                                preset: 'islands#darkOrangeStretchyIcon'
+                            });
+                            myPlacemark1.events.add(['click'],  function (e) {
+
+                                console.log('click cluck');
+
+                            });
+                            PlacemarkArray.push(myPlacemark1);
+                            map.geoObjects.add(myPlacemark1);
+                        });
+
+
         });
     </script>
 </head>
