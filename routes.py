@@ -36,3 +36,7 @@ def workspace():
 @fl_app.route('/map')
 def map():
     return render_template('map.html')
+
+@fl_app.route('/controls')
+def controls():
+    return render_template('controls.html')
