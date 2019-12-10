@@ -4,21 +4,20 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="/static/css/workspace_style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
-        <div class="header"> HEADER </div>
-        <div class="controls">
-            <iframe src="{{ url_for('controls') }}" name="controlsFrame" id="controlsFrameID" width="100%" height="100%"></iframe>
-        </div>
-        <div class="map" id="mapID" >
-            <iframe src="{{ url_for('map') }}" name="mapFrame" id="mapFrameID" width="100%" height="100%"></iframe>
-        </div>
-        <div class="content"> CONTENT </div>
-        <div class="footer"> FOOTER </div>
+      <div class="flex controls">
+          <iframe src="/controls.html" name="controlsFrame" id="controlsFrameID" width="100%" height="100%"></iframe>
+      </div>
+      <div class="flex map">
+          <iframe src="{{ url_for('map') }}" name="mapFrame" id="mapFrameID" width="100%" height="100%"></iframe>
+      </div>
+      <div class="flex content_view">
+          <iframe src="/content.html" name="contentFrame" id="contentFrameID" width="100%" height="100%"></iframe>
+      </div>
     </div>
 </body>
 </html>
-
