@@ -4,8 +4,17 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
+    <script type="text/javascript">
+        function OnClose() {
+            console.log('Close');
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="/static/css/workspace_style.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/workspace_style.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/form_style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -19,5 +28,44 @@
         <div class="content"> </div>
         <div class="footer"> </div>
     </div>
+
+    <div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span OnClick="OnClose();" class="close">&times;</span>
+      <h2>Add place</h2>
+    </div>
+    <div class="modal-body">
+      <form action="" method="post" novalidate>
+          {{ form.hidden_tag() }}
+          <p>
+              {{ form.name.label }}<br>
+              {{ form.name() }}
+          </p>
+          <p>
+              {{ form.lant.label }}<br>
+              {{ form.lant() }}
+          </p>
+          <p>
+              {{ form.long.label }}<br>
+              {{ form.long() }}
+          </p>
+          <p>
+              {{ form.description.label }}<br>
+              {{ form.description() }}
+          </p>
+          <p>
+              {{ form.photos.label }}<br>
+              {{ form.description() }}
+          </p>
+          <p>{{ form.submit() }}</p>
+      </form>
+    </div>
+  </div>
+
+</div>
+
 </body>
 </html>
