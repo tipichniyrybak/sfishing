@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField, MultipleFileField
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
@@ -12,5 +12,5 @@ class AddPlaceForm(FlaskForm):
     lant = StringField('Place lant', validators=[DataRequired()])
     long = StringField('Place long', validators=[DataRequired()])
     description = StringField('Place description', validators=[])
-    photos = FileField('Plase photos', validators=[])
+    photos = MultipleFileField('Plase photos', validators=[])
     submit = SubmitField('Add place')
