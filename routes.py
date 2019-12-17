@@ -31,10 +31,14 @@ def login():
 
 @fl_app.route('/workspace', methods=['GET', 'POST'])
 def workspace():
+    return render_template('workspace.html')
+
+@fl_app.route('/workspace/add_place_popup', methods=['GET', 'POST'])
+def add_place_popup():
     add_place_form = AddPlaceForm()
-    if add_place_form.validate_on_submit():
-        print('add_base!!')
-    return render_template('workspace.html', form=add_place_form)
+    return render_template('add_place_popup.html', form=add_place_form)
+
+
 
 @fl_app.route('/map')
 def map():
@@ -44,5 +48,4 @@ def map():
 
 @fl_app.route('/controls')
 def controls():
-
     return render_template('controls.html')

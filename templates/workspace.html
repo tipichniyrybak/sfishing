@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,6 +17,7 @@
     <link href="/static/css/form_style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
+{% block content %}
     <div class="container">
         <div class="header"> HEADER </div>
         <div class="controls">
@@ -28,45 +29,8 @@
         <div class="content"> </div>
         <div class="footer"> </div>
     </div>
+{% endblock %}
 
-    <div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header">
-      <span OnClick="OnClose();" class="close">&times;</span>
-      <h2>Add place</h2>
-    </div>
-    <div class="modal-body">
-      <form action="" method="post" novalidate>
-          {{ form.hidden_tag() }}
-          <p>
-              {{ form.name.label }}<br>
-              {{ form.name() }}
-          </p>
-          <p>
-              {{ form.lant.label }}<br>
-              {{ form.lant() }}
-          </p>
-          <p>
-              {{ form.long.label }}<br>
-              {{ form.long() }}
-          </p>
-          <p>
-              {{ form.description.label }}<br>
-              {{ form.description() }}
-          </p>
-          <p>
-              {{ form.photos.label }}<br>
-              {{ form.photos() }}
-          </p>
-
-          <p>{{ form.submit() }}</p>
-      </form>
-    </div>
-  </div>
-
-</div>
 
 </body>
 </html>
