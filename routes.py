@@ -31,12 +31,12 @@ def login():
 
 @fl_app.route('/workspace', methods=['GET', 'POST'])
 def workspace():
-    return render_template('workspace.html')
-
-@fl_app.route('/workspace/add_place_popup', methods=['GET', 'POST'])
-def add_place_popup():
+    rec = DB.query("SELECT * FROM fishing_places")
     add_place_form = AddPlaceForm()
-    return render_template('add_place_popup.html', form=add_place_form)
+
+    return render_template('workspace.html', places=rec, form = add_place_form)
+
+
 
 
 
