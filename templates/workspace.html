@@ -3,10 +3,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Title</title>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=18f62a6d-77ff-4bb8-8f46-3b6d164fdf4d&lang=ru_RU" type="text/javascript"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script type=text/javascript src="{{ url_for('static', filename='js/jquery341min.js') }}"></script>
     <script type="text/javascript">
-        ymaps.ready(function () {
-            console.log('llll');
+        function map_init() {
 
             var PlacemarkArray = [];
 
@@ -15,8 +14,11 @@
                 zoom: 10,
                 controls: []
             });
-            console.log(map);
+
             var places = {{ places|tojson }};
+
+
+
             console.log(places);
 
             places.forEach(function(element) {
@@ -34,8 +36,11 @@
                             PlacemarkArray.push(myPlacemark1);
                             map.geoObjects.add(myPlacemark1);
                         });
-        });
+
+        }
+
     </script>
+
     <script type="text/javascript">
         function OnClose() {
             console.log('Close');
@@ -56,6 +61,13 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
+
+            ymaps.ready(function () {
+                console.log('llll');
+                map_init();
+                console.log(map);
+            });
+
             $('#addbaseID').click(function(e){
                 e.preventDefault();
                 var bName = $('#base_name').val();
@@ -101,7 +113,7 @@
                 var modal = document.getElementById("myModal");
                 modal.style.display = "none";
 
-                $('#divmapID').html('<div id="map" style="margin:auto; width: 100%; height: 100%"></div>');
+                map_init();
             });
         });
     </script>
