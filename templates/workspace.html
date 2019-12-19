@@ -3,7 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Title</title>
     <script src="https://api-maps.yandex.ru/2.1/?apikey=18f62a6d-77ff-4bb8-8f46-3b6d164fdf4d&lang=ru_RU" type="text/javascript"></script>
-    <script type=text/javascript src="{{ url_for('static', filename='js/jquery341min.js') }}"></script>
+    <script type=text/javascript src="{{ url_for('static', filename='js/libs/jquery341min.js') }}"></script>
     <script type="text/javascript">
         function map_init() {
 
@@ -17,6 +17,22 @@
 
             var places = {{ places|tojson }};
 
+            $.ajax({
+                type: "POST",
+                url: "/get_places",
+
+                type: 'POST',
+                success: function(response) {
+                    var json = jQuery.parseJSON(response)
+                    console.log('resp:');
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.log('error:');
+                    console.log(error);
+                }
+            });
+            console.log('places:  ');
             console.log(places);
 
             places.forEach(function(element) {
@@ -34,7 +50,6 @@
                             PlacemarkArray.push(myPlacemark1);
                             map.geoObjects.add(myPlacemark1);
                         });
-
         }
 
     </script>
@@ -59,10 +74,9 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-
             ymaps.ready(function () {
-                console.log('llll');
                 map_init();
+                console.log('map:  ');
                 console.log(map);
             });
 

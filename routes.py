@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, request, url_for
+from flask import render_template, flash, redirect, request, url_for, json
 from __init__ import fl_app
 from forms import LoginForm, AddPlaceForm    # RegistrationForm, SendForm
 from db_adapter import DB
@@ -33,17 +33,17 @@ def login():
 def workspace():
     rec = DB.query("SELECT * FROM fishing_places")
     add_place_form = AddPlaceForm()
-
     return render_template('workspace.html', places=rec, form = add_place_form)
 
-
-
+@fl_app.route('/get_places', methods=['GET', 'POST'])
+def get_places():
+    rec = DB.query("SELECT * FROM fishing_places")
+    return  json.dumps(rec)
 
 
 @fl_app.route('/map')
 def map():
     rec = DB.query("SELECT * FROM fishing_places")
-
     return render_template('map.html', places=rec)
 
 @fl_app.route('/controls')
