@@ -5,53 +5,56 @@
     <script src="https://api-maps.yandex.ru/2.1/?apikey=18f62a6d-77ff-4bb8-8f46-3b6d164fdf4d&lang=ru_RU" type="text/javascript"></script>
     <script type=text/javascript src="{{ url_for('static', filename='js/libs/jquery341min.js') }}"></script>
     <script type="text/javascript">
-        function map_init() {
+        class YandexMap {
+            map = null;
+            PlacemarkArray = [];
 
-            var PlacemarkArray = [];
+            constructor() {
+                var that = this;
+                ymaps.ready(function () {
+                    that.map = new ymaps.Map('map', {
+                        center: [59.939095, 30.315961],
+                        zoom: 10,
+                        controls: []
+                    });
+                });
+            }
 
-            var map = new ymaps.Map('map', {
-                center: [59.939095, 30.315961],
-                zoom: 10,
-                controls: []
-            });
+            set_places() {
+                var that = this;
+                $.ajax({
+                    type: "POST",
+                    url: "/get_places",
 
-            var places = {{ places|tojson }};
+                    type: 'POST',
+                    success: function(response) {
+                        var json_resp = jQuery.parseJSON(response)
 
-            $.ajax({
-                type: "POST",
-                url: "/get_places",
-
-                type: 'POST',
-                success: function(response) {
-                    var json = jQuery.parseJSON(response)
-                    console.log('resp:');
-                    console.log(response);
-                },
-                error: function(error) {
-                    console.log('error:');
-                    console.log(error);
-                }
-            });
-            console.log('places:  ');
-            console.log(places);
-
-            places.forEach(function(element) {
-                            console.log(element[1]);
-                            var myPlacemark1 = new ymaps.Placemark([element[2], element[3]], {
-                                iconContent: element[1]
-                            }, {
-                                preset: 'islands#darkOrangeStretchyIcon'
+                        console.log('json_resp:');
+                        console.log(json_resp);
+                        ymaps.ready(function () {
+                            json_resp.forEach(function(element) {
+                                console.log(element[1]);
+                                var myPlacemark1 = new ymaps.Placemark([element[2], element[3]], {
+                                    iconContent: element[1]
+                                }, {
+                                    preset: 'islands#darkOrangeStretchyIcon'
+                                });
+                                myPlacemark1.events.add(['click'],  function (e) {
+                                    console.log('click cluck');
+                                });
+                                that.PlacemarkArray.push(myPlacemark1);
+                                that.map.geoObjects.add(myPlacemark1);
                             });
-                            myPlacemark1.events.add(['click'],  function (e) {
-
-                                console.log('click cluck');
-
-                            });
-                            PlacemarkArray.push(myPlacemark1);
-                            map.geoObjects.add(myPlacemark1);
                         });
+                    },
+                    error: function(error) {
+                        console.log('error:');
+                        console.log(error);
+                    }
+                });
+            }
         }
-
     </script>
 
     <script type="text/javascript">
@@ -60,73 +63,34 @@
             var modal = document.getElementById("myModal");
             modal.style.display = "none";
         }
-        function OnAddPlace() {
-            console.log("Кнопка нажата.");
-            var modal = document.getElementById("myModal");
-            modal.style.display = "block";
-        }
+
         function OnSubmitAddPlace() {
             console.log("OnSubmitAddPlace");
             var modal = document.getElementById("myModal");
             modal.style.display = "none";
         }
     </script>
+
     <script type="text/javascript">
 
+        var myYandexMap = null;
+
         $(document).ready(function() {
-            ymaps.ready(function () {
-                map_init();
-                console.log('map:  ');
-                console.log(map);
-            });
 
-            $('#addbaseID').click(function(e){
+            myYandexMap = new YandexMap()
+            myYandexMap.set_places();
+            console.log('1 map:  ');
+            console.log(myYandexMap);
+
+            $('#addPlaseID').click(function(e){
                 e.preventDefault();
-                var bName = $('#base_name').val();
-                var bLant = $('#lant').val();
-                var bLong = $('#long').val();
-                var bDescription = $('#description').val();
-
-                var files = $('#upload_images')[0].files;
-                var bPhotos ='';
-
-                const formData = new FormData();
-                for (let i = 0; i < files.length; i++) {
-                    let file = files[i];
-                    formData.append('files[]', file);
-                    bPhotos = bPhotos + file.name + '|';
-                    console.log('files name:' + file.name);
-                }
-                bPhotos = bPhotos.substring(0, bPhotos.length - 1)
-
-                formData.append('BaseName', bName);
-                formData.append('BaseLant', bLant);
-                formData.append('BaseLong', bLong);
-                formData.append('BasePhotos', bPhotos);
-
-                formData.append('BaseDescription', bDescription);
-                console.log(formData);
-                console.log(bName + ' ' + bLant + ' ' + bLong + ' ' + bDescription);
-
-                $.ajax({
-                  url: "./phps/add_base.php",
-                  type: "POST",
-                  // body: formData,
-                  data: formData,
-                  processData: false,  // tell jQuery not to process the data
-                  contentType: false,  // tell jQuery not to set contentType
-                  dataType: 'text',
-                  cache: false,
-                  success: function(data){
-                      console.log('result of add_base():' + data);
-                  }
-                });
-                document.getElementById('add_base_form').reset();
+                console.log("Кнопка нажата.");
                 var modal = document.getElementById("myModal");
-                modal.style.display = "none";
-
-                map_init();
+                modal.style.display = "block";
+                console.log('myYandexMap:  ');
+                console.log(myYandexMap);
             });
+
         });
     </script>
 
@@ -139,7 +103,7 @@
     <div class="container">
         <div class="header"> HEADER </div>
         <div class="controls">
-            <input type="button" value="Add place" name="Add place" OnClick="OnAddPlace();">
+            <input type="button" id="addPlaseID" value="Add place" name="Add place">
         </div>
         <div class="map" id="divmapID">
            <div id="map" style="margin:auto; width: 100%; height: 100%"></div>
@@ -166,9 +130,6 @@
         </div>
       </div>
     </div>
-
 {% endblock %}
-
-
 </body>
 </html>
