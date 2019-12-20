@@ -40,6 +40,14 @@ def get_places():
     rec = DB.query("SELECT * FROM fishing_places")
     return  json.dumps(rec)
 
+@fl_app.route('/add_place', methods=['POST'])
+def add_place():
+    sql = "SELECT add_place('" + request.form['place_name'] + "', " + request.form['lant'] + ", " + request.form['long'] + ", '" + "__photos" + "', '" + request.form['description']+ "')"
+    print(sql)
+    rec = DB.query(sql)
+
+    return json.dumps(rec)
+
 
 @fl_app.route('/map')
 def map():

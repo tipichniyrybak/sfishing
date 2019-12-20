@@ -1,61 +1,15 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Title</title>
-    <script src="https://api-maps.yandex.ru/2.1/?apikey=18f62a6d-77ff-4bb8-8f46-3b6d164fdf4d&lang=ru_RU" type="text/javascript"></script>
+    <title>Workspace</title>
+
+    <link href="/static/css/workspace_style.css" type="text/css" rel="stylesheet" />
+    <link href="/static/css/form_style.css" type="text/css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?apikey=18f62a6d-77ff-4bb8-8f46-3b6d164fdf4d&lang=ru_RU"></script>
     <script type=text/javascript src="{{ url_for('static', filename='js/libs/jquery341min.js') }}"></script>
-    <script type="text/javascript">
-        class YandexMap {
-            map = null;
-            PlacemarkArray = [];
+    <script type=text/javascript src="{{ url_for('static', filename='js/yamaps.js') }}"></script>
 
-            constructor() {
-                var that = this;
-                ymaps.ready(function () {
-                    that.map = new ymaps.Map('map', {
-                        center: [59.939095, 30.315961],
-                        zoom: 10,
-                        controls: []
-                    });
-                });
-            }
-
-            set_places() {
-                var that = this;
-                $.ajax({
-                    type: "POST",
-                    url: "/get_places",
-
-                    type: 'POST',
-                    success: function(response) {
-                        var json_resp = jQuery.parseJSON(response)
-
-                        console.log('json_resp:');
-                        console.log(json_resp);
-                        ymaps.ready(function () {
-                            json_resp.forEach(function(element) {
-                                console.log(element[1]);
-                                var myPlacemark1 = new ymaps.Placemark([element[2], element[3]], {
-                                    iconContent: element[1]
-                                }, {
-                                    preset: 'islands#darkOrangeStretchyIcon'
-                                });
-                                myPlacemark1.events.add(['click'],  function (e) {
-                                    console.log('click cluck');
-                                });
-                                that.PlacemarkArray.push(myPlacemark1);
-                                that.map.geoObjects.add(myPlacemark1);
-                            });
-                        });
-                    },
-                    error: function(error) {
-                        console.log('error:');
-                        console.log(error);
-                    }
-                });
-            }
-        }
-    </script>
 
     <script type="text/javascript">
         function OnClose() {
@@ -76,34 +30,59 @@
         var myYandexMap = null;
 
         $(document).ready(function() {
-
             myYandexMap = new YandexMap()
             myYandexMap.set_places();
             console.log('1 map:  ');
             console.log(myYandexMap);
 
-            $('#addPlaseID').click(function(e){
+            $('#openAddPlaseFormID').click(function(e){
                 e.preventDefault();
-                console.log("Кнопка нажата.");
+                console.log("openAddPlaseFormID");
                 var modal = document.getElementById("myModal");
                 modal.style.display = "block";
                 console.log('myYandexMap:  ');
                 console.log(myYandexMap);
             });
 
+            $('#closeAddPlaceFormID').click(function(e){
+                e.preventDefault();
+                console.log("closeAddPlaceFormID");
+                var modal = document.getElementById("myModal");
+                modal.style.display = "none";
+                console.log('myYandexMap:  ');
+                console.log(myYandexMap);
+            });
+
+            $('#confirmAddPlaseID').click(function(e){
+                e.preventDefault();
+                console.log("confirmAddPlaseID");
+                $.ajax({
+        			url: '/add_place',
+        			data: $('form').serialize(),
+        			type: 'POST',
+        			success: function(response){
+        			    //var json_resp = jQuery.parseJSON(response)
+        				console.log(response);
+        			},
+        			error: function(error){
+        				console.log(error);
+        			}
+        		});
+
+                var modal = document.getElementById("myModal");
+                modal.style.display = "none";
+
+            });
         });
     </script>
 
-
-    <link href="/static/css/workspace_style.css" type="text/css" rel="stylesheet" />
-    <link href="/static/css/form_style.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
 {% block content %}
     <div class="container">
         <div class="header"> HEADER </div>
         <div class="controls">
-            <input type="button" id="addPlaseID" value="Add place" name="Add place">
+            <input type="button" id="openAddPlaseFormID" value="Add place" name="Add place">
         </div>
         <div class="map" id="divmapID">
            <div id="map" style="margin:auto; width: 100%; height: 100%"></div>
@@ -115,17 +94,17 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-              <span OnClick="OnClose();" class="close">&times;</span>
+              <span id="closeAddPlaceFormID" class="close">&times;</span>
               <h2>Add place</h2>
             </div>
         <div class="modal-body">
-            <form enctype="multipart/form-data" method="post" id="add_base_form">
-                <p>Название базы: <input type="text" id="base_name" /></p>
-                <p>lant: <input type="text" id="lant" /></p>
-                <p>long: <input type="text" id="long" /></p>
-                <p>descr: <input type="text" id="description" /></p>
-                <input type="file"  id="upload_images" min="1" max="999" name="userFile[]" multiple="true" />
-                <p><input type="button" value="Добавить базу" id="addbaseID" name="addbase" /></p>
+            <form enctype="multipart/form-data" method="post" name="add_plase_form" role="form">
+                <p>Название базы: <input type="text" id="place_nameID" name="place_name" /></p>
+                <p>lant: <input type="text" id="lantID" name="lant"/></p>
+                <p>long: <input type="text" id="longID" name="long"/></p>
+                <p>descr: <input type="text" id="descriptionID" name="description"/></p>
+                <input type="file"  id="upload_imagesID" min="1" max="999" name="userFile[]" multiple="true" name="upload_images" />
+                <p><input type="button" value="Добавить место" id="confirmAddPlaseID" name="addplace" /></p>
             </form>
         </div>
       </div>
