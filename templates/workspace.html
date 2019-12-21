@@ -68,6 +68,8 @@
                         } else {
                             myYandexMap.set_places();
                             myYandexMap.map.container.fitToViewport();
+                            var modal = document.getElementById("myModal");
+                            modal.style.display = "none";
                         }
 
 
@@ -77,8 +79,7 @@
         			}
         		});
 
-                var modal = document.getElementById("myModal");
-                modal.style.display = "none";
+
 
             });
         });
