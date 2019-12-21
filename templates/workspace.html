@@ -61,8 +61,16 @@
         			data: $('form').serialize(),
         			type: 'POST',
         			success: function(response){
-        			    //var json_resp = jQuery.parseJSON(response)
-        				console.log(response);
+        			    var json_resp = jQuery.parseJSON(response);
+        				console.log(json_resp);
+        				if (json_resp[0][0] == 0) {
+                            console.log('no!!!');
+                        } else {
+                            myYandexMap.set_places();
+                            myYandexMap.map.container.fitToViewport();
+                        }
+
+
         			},
         			error: function(error){
         				console.log(error);
