@@ -10,21 +10,6 @@
     <script type=text/javascript src="{{ url_for('static', filename='js/libs/jquery341min.js') }}"></script>
     <script type=text/javascript src="{{ url_for('static', filename='js/yamaps.js') }}"></script>
 
-
-    <script type="text/javascript">
-        function OnClose() {
-            console.log('Close');
-            var modal = document.getElementById("myModal");
-            modal.style.display = "none";
-        }
-
-        function OnSubmitAddPlace() {
-            console.log("OnSubmitAddPlace");
-            var modal = document.getElementById("myModal");
-            modal.style.display = "none";
-        }
-    </script>
-
     <script type="text/javascript">
 
         var myYandexMap = null;
@@ -71,20 +56,14 @@
                             var modal = document.getElementById("myModal");
                             modal.style.display = "none";
                         }
-
-
         			},
         			error: function(error){
         				console.log(error);
         			}
         		});
-
-
-
             });
         });
     </script>
-
 </head>
 <body>
 {% block content %}
