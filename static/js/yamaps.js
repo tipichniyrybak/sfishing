@@ -25,7 +25,6 @@ class YandexMap {
                 console.log('json_resp:');
                 console.log(json_resp);
                 $(".content").html(json_resp);
-
             },
             error: function(error) {
                 console.log('error:');
