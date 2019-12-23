@@ -13,6 +13,27 @@ class YandexMap {
         });
     }
 
+    get_place_info(place_id) {
+        $.ajax({
+            type: "POST",
+            url: "/get_place_info?place_id=" + place_id,
+
+            type: 'POST',
+            success: function(response) {
+                var json_resp = jQuery.parseJSON(response)
+
+                console.log('json_resp:');
+                console.log(json_resp);
+                $(".content").html(json_resp);
+
+            },
+            error: function(error) {
+                console.log('error:');
+                console.log(error);
+            }
+        });
+    }
+
     set_places() {
         var that = this;
         $.ajax({
@@ -35,6 +56,10 @@ class YandexMap {
                         });
                         myPlacemark1.events.add(['click'],  function (e) {
                             console.log('click cluck');
+//                            document.getElementByID("divcontentID").innerHTML = element[1];
+
+                            that.get_place_info(element[0]);
+
                         });
                         that.PlacemarkArray.push(myPlacemark1);
                         that.map.geoObjects.add(myPlacemark1);
