@@ -40,10 +40,38 @@
             $('#confirmAddPlaseID').click(function(e){
                 e.preventDefault();
                 console.log("confirmAddPlaseID");
+
+                var pName = $('#place_nameID').val();
+                var pLant = $('#lantID').val();
+                var pLong = $('#longID').val();
+                var pDescription = $('#descriptionID').val();
+
+                var files = $('#upload_imagesID')[0].files;
+                var pPhotos ='';
+
+                formData = new FormData();
+                for (let i = 0; i < files.length; i++) {
+                    let file = files[i];
+                    formData.append('files[]', file);
+                    pPhotos = pPhotos + file.name + '|';
+                    console.log('files name:' + file.name);
+                }
+                pPhotos = pPhotos.substring(0, pPhotos.length - 1)
+
+                formData.append('PlaceName', pName);
+                formData.append('PlaceLant', pLant);
+                formData.append('PlaceLong', pLong);
+                formData.append('PlacePhotos', pPhotos);
+
+                formData.append('PlaceDescription', pDescription);
+                console.log(formData);
+
                 $.ajax({
         			url: '/add_place',
-        			data: $('form').serialize(),
         			type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
         			success: function(response){
         			    var json_resp = jQuery.parseJSON(response);
         				console.log(json_resp);
@@ -74,8 +102,36 @@
         <div class="map" id="divmapID">
            <div id="map" style="margin:auto; width: 100%; height: 100%"></div>
         </div>
-        <div class="content" id="divcontentID"> </div>
-        <div class="footer"> </div>
+        <div class="content" id="divcontentID">
+            <div id="base_name">
+                ...Base Name...
+            </div>
+            <br>
+
+            <div id="coord">
+                <div id="lant">00.00000</div>
+                <br>
+                <div id="long">00.00000</div>
+            </div>
+
+            <br>
+
+            <div id="photos">
+                <!-- <img style='imgm' src='./content/fishing_places/333/32834799.jpg' alt='Forest'> -->
+            </div>
+            <br>
+
+            <div id="decription">
+                Decription Text
+            </div>
+            <br>
+
+            <div id="orders">
+                /Orders list/
+            </div>
+        </div>
+        <div class="footer">
+        </div>
     </div>
             <!-- Modal content -->
     <div id="myModal" class="modal">
@@ -90,7 +146,7 @@
                 <p>lant: <input type="text" id="lantID" name="lant"/></p>
                 <p>long: <input type="text" id="longID" name="long"/></p>
                 <p>descr: <input type="text" id="descriptionID" name="description"/></p>
-                <input type="file"  id="upload_imagesID" min="1" max="999" name="userFile[]" multiple="true" name="upload_images" />
+                <input type="file"  id="upload_imagesID" min="1" max="999" multiple="true" name="upload_images" />
                 <p><input type="button" value="Добавить место" id="confirmAddPlaseID" name="addplace" /></p>
             </form>
         </div>

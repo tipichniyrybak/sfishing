@@ -48,7 +48,11 @@ def get_place_info():
 
 @fl_app.route('/add_place', methods=['POST'])
 def add_place():
-    sql = "SELECT add_place('" + request.form['place_name'] + "', " + request.form['lant'] + ", " + request.form['long'] + ", '" + "__photos" + "', '" + request.form['description']+ "')"
+    photos = request.files['files[]']
+    if photos:
+        filename = photos.filename
+        print('file name: ' + filename)
+    sql = "SELECT add_place('" + request.data[0] + "', " + request.form['lant'] + ", " + request.form['long'] + ", '" + filename + "', '" + request.form['description'] + "')"
     print(sql)
     rec = DB.query(sql)
 
