@@ -4,6 +4,10 @@ from forms import LoginForm, AddPlaceForm    # RegistrationForm, SendForm
 from db_adapter import DB
 import os
 import datetime
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = '/home/nikifor'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 @fl_app.route('/')
 @fl_app.route('/index')
@@ -48,11 +52,11 @@ def get_place_info():
 
 @fl_app.route('/add_place', methods=['POST'])
 def add_place():
-    photos = request.files['files[]']
-    if photos:
-        filename = photos.filename
-        print('file name: ' + filename)
-    sql = "SELECT add_place('" + request.data[0] + "', " + request.form['lant'] + ", " + request.form['long'] + ", '" + filename + "', '" + request.form['description'] + "')"
+    for photo in request.files.getlist('files[]'):
+        filename = secure_filename(photo.filename)
+        photo.save(os.path.join(UPLOAD_FOLDER, filename))
+
+    sql = "SELECT add_place('" + request.args.get('place_name', '12', type=str) + "', " + str(request.args.get('place_lant', 0.1, type=float)) + ", " + str(request.args.get('place_long', 0.1, type=float)) + ", '" + request.args.get('place_photos', '12', type=str) + "', '" + request.args.get('place_description', '12', type=str) + "')"
     print(sql)
     rec = DB.query(sql)
 

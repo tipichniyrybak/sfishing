@@ -7,6 +7,7 @@ fl_app.config.from_object(Config)
 bootstrap = Bootstrap(fl_app)
 
 
+
 from routes import *
 
 
