@@ -29,6 +29,12 @@ class YandexMap {
                 $("#lant").html('<b>Place lant:</b> ' + json_resp[0][2]);
                 $("#long").html('<b>Place long:</b> ' + json_resp[0][3]);
                 $("#decription").html('<b>Place description:</b> ' + json_resp[0][4]);
+
+                console.log('photos str:  ');
+                console.log(json_resp[0][5]);
+                var photo_names = json_resp[0][5].split('|');
+                console.log('photo_names:  ');
+                console.log(photo_names);
                 $("#photos").html('<b>Place photos:</b> ' + json_resp[0][5]);
             },
             error: function(error) {
