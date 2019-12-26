@@ -91,7 +91,9 @@
         <div class="controls">
             <input type="button" id="openAddPlaseFormID" value="Add place" name="Add place">
             <br>
-            <img src="../media/places/36/maxresdefault.jpg" alt="Forest">
+
+            <img src="{{url_for('static', filename='img/places/40/ryba.jpg')}}" />
+            <img src="{{url_for('media', filename='places/40/ryba.jpg')}}" />
         </div>
         <div class="map" id="divmapID">
            <div id="map" style="margin:auto; width: 100%; height: 100%"></div>
