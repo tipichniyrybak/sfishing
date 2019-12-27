@@ -6,6 +6,20 @@
     <link href="/static/css/workspace_style.css" type="text/css" rel="stylesheet" />
     <link href="/static/css/form_style.css" type="text/css" rel="stylesheet" />
 
+    <style>
+        img {
+          border: 1px solid #ddd; /* Gray border */
+          border-radius: 4px;  /* Rounded border */
+          padding: 5px; /* Some padding */
+          width: 150px; /* Set a small width */
+        }
+
+        /* Add a hover effect (blue shadow) */
+        img:hover {
+          box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+        }
+</style>
+
     <script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?apikey=18f62a6d-77ff-4bb8-8f46-3b6d164fdf4d&lang=ru_RU"></script>
     <script type=text/javascript src="{{ url_for('static', filename='js/libs/jquery341min.js') }}"></script>
     <script type=text/javascript src="{{ url_for('static', filename='js/yamaps.js') }}"></script>

@@ -35,9 +35,12 @@ class YandexMap {
                 var photo_names = json_resp[0][5].split('|');
                 console.log('photo_names:  ');
                 console.log(photo_names);
+                var photosHTML = '<b>Place photos:</b> ';
+                photo_names.forEach(function(element) {
+                    photosHTML = photosHTML + '<img src="/static/img/places/40/ryba.jpg" />';
+                });
 
-
-                $("#photos").html('<b>Place photos:</b> ' + json_resp[0][5]);
+                $("#photos").html(photosHTML);
             },
             error: function(error) {
                 console.log('error:');
