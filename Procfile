@@ -1,1 +1,1 @@
-web: gunicorn sfishing:fl_app
+web: gunicorn fl_app:app
