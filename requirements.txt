@@ -1,5 +1,5 @@
 asn1crypto==0.24.0
-catfish==1.4.4
+catfish==1.4.4.1
 certifi==2018.1.18
 chardet==3.0.4
 command-not-found==0.3
