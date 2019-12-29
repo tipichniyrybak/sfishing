@@ -55,7 +55,7 @@ def add_place():
     rec = DB.query(sql)
     if rec[0][0] != 0:
         basedir = os.path.abspath(os.path.dirname(__file__))
-        UPLOAD_FOLDER = os.path.join(basedir, 'myapp/static')
+        UPLOAD_FOLDER = os.path.join(basedir, 'fl_app/static')
         UPLOAD_FOLDER = UPLOAD_FOLDER + "/img/places/" + str(rec[0][0])
 
         if not os.path.exists(UPLOAD_FOLDER):
