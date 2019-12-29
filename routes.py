@@ -5,6 +5,7 @@ from db_adapter import DB
 import os
 import datetime
 from werkzeug.utils import secure_filename
+from ftplib import FTP
 
 @fl_app.route('/')
 @fl_app.route('/index')
@@ -61,6 +62,21 @@ def add_place():
         for photo in request.files.getlist('files[]'):
             filename = secure_filename(photo.filename)
             photo.save(os.path.join(UPLOAD_FOLDER, filename))
+
+        # ftp = FTP()
+        # ftp.set_debuglevel(2)
+        # ftp.connect('ftpupload.net', 21)
+        # ftp.login('epiz_24989236', 'FIbPfZKy3F')
+        # UPLOAD_FOLDER = "/htdocs/media/img/places/" + "40/"
+        # # str(rec[0][0])
+        # ftp.cwd(UPLOAD_FOLDER)
+        #
+        # for photo in request.files.getlist('files[]'):
+        #     # filename  = secure_filename(photo.)
+        #
+        #     fp = open(photo, 'rb')
+        #     # ftp.storbinary('STOR %s' % os.path.basename(filename), fp, 1024)
+        #     fp.close()
 
     return json.dumps(rec)
 
