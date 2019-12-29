@@ -56,7 +56,7 @@ def add_place():
     if rec[0][0] != 0:
         basedir = os.path.abspath(os.path.dirname(__file__))
         UPLOAD_FOLDER = os.path.join(basedir, 'myapp/static')
-        UPLOAD_FOLDER = UPLOAD_FOLDER + "/static/img/places/" + str(rec[0][0])
+        UPLOAD_FOLDER = UPLOAD_FOLDER + "/img/places/" + str(rec[0][0])
 
         if not os.path.exists(UPLOAD_FOLDER):
             os.mkdir(UPLOAD_FOLDER)
