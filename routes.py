@@ -67,6 +67,8 @@ def add_place():
             filename = secure_filename(photo.filename)
             photo.save(os.path.join(UPLOAD_FOLDER, filename))
 
+        print(UPLOAD_FOLDER)
+
         # ftp = FTP()
         # ftp.set_debuglevel(2)
         # ftp.connect('ftpupload.net', 21)
