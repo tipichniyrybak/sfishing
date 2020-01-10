@@ -1,6 +1,7 @@
 class YandexMap {
     map = null;
     PlacemarkArray = [];
+    d = 7;
 
     constructor() {
         var that = this;

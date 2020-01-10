@@ -58,8 +58,6 @@ def add_place():
     if rec[0][0] != 0:
 
         ftp = FTP()
-        g =9
-
         ftp.connect('ftpupload.net', 21)
         ftp.login('epiz_24989236', 'FIbPfZKy3F')
         FTP_upload_file_path = "/htdocs/media/img/places/" + str(rec[0][0])
