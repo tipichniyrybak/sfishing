@@ -7,6 +7,8 @@ import datetime
 from werkzeug.utils import secure_filename
 from ftplib import FTP
 
+
+
 @fl_app.route('/')
 @fl_app.route('/index')
 def index():
@@ -54,37 +56,30 @@ def add_place():
     print(sql)
     rec = DB.query(sql)
     if rec[0][0] != 0:
-        # basedir = os.path.abspath(os.path.dirname(__file__))
-        # UPLOAD_FOLDER = os.path.join(basedir, 'fl_app/static')
-        # UPLOAD_FOLDER = UPLOAD_FOLDER + "/img/places/" + str(rec[0][0])
 
-        UPLOAD_FOLDER = "/app/static/img/places/"
+        ftp = FTP()
+        g =9
 
-        if not os.path.exists(UPLOAD_FOLDER):
-            os.mkdir(UPLOAD_FOLDER)
+        ftp.connect('ftpupload.net', 21)
+        ftp.login('epiz_24989236', 'FIbPfZKy3F')
+        FTP_upload_file_path = "/htdocs/media/img/places/" + str(rec[0][0])
+
+        if not FTP_upload_file_path in ftp.nlst():
+            ftp.mkd(FTP_upload_file_path)
+
+        ftp.cwd(FTP_upload_file_path)
 
         for photo in request.files.getlist('files[]'):
             filename = secure_filename(photo.filename)
-            photo.save(os.path.join(UPLOAD_FOLDER, filename))
+            upload_file_path = os.path.join(fl_app.root_path, 'static', 'img', 'tmp_places_photo', filename)
+            photo.save(upload_file_path)
+            fp = open(upload_file_path, 'rb')
+            ftp.storbinary('STOR %s' % os.path.basename(filename), fp, 1024)
+            os.remove(upload_file_path)
 
-        print(UPLOAD_FOLDER)
+        fp.close()
 
-        # ftp = FTP()
-        # ftp.set_debuglevel(2)
-        # ftp.connect('ftpupload.net', 21)
-        # ftp.login('epiz_24989236', 'FIbPfZKy3F')
-        # UPLOAD_FOLDER = "/htdocs/media/img/places/" + "40/"
-        # # str(rec[0][0])
-        # ftp.cwd(UPLOAD_FOLDER)
-        #
-        # for photo in request.files.getlist('files[]'):
-        #     # filename  = secure_filename(photo.)
-        #
-        #     fp = open(photo, 'rb')
-        #     # ftp.storbinary('STOR %s' % os.path.basename(filename), fp, 1024)
-        #     fp.close()
-
-    return json.dumps(rec)
+    return json.dumps(rec[0][0])
 
 
 @fl_app.route('/map')

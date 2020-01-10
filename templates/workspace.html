@@ -81,7 +81,7 @@
         			success: function(response){
         			    var json_resp = jQuery.parseJSON(response);
         				console.log(json_resp);
-        				if (json_resp[0][0] == 0) {
+        				if (json_resp == 0) {
                             console.log('no!!!');
                         } else {
                             myYandexMap.set_places();
