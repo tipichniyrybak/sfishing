@@ -53,15 +53,12 @@ def get_place_info():
     ftp.login('epiz_24989236', 'FIbPfZKy3F')
     FTP_path = "/htdocs/media/img/places/" + str(place_id)
     ftp.cwd(FTP_path)
+    os.chdir(os.path.join(fl_app.root_path, 'static', 'img', 'tmp_places_photo'))
 
-    files = ftp.nlst()
-    i = 11
-    for file in files:
-        print("Downloading..." + file)
-        file_path = os.path.join(fl_app.root_path, 'static', 'img', 'tmp_places_photo', str(i))
-        i = i + 1
-        with open(file_path, 'wb') as f:
-            ftp.retrbinary('RETR ' + file, f.write)
+    for filename in ftp.nlst('*.*'):
+        fhandle = open(filename, 'wb')
+        ftp.retrbinary('RETR ' + filename, fhandle.write)
+        fhandle.close()
     ftp.close()
 
     rec = DB.query("select * from fishing_places where \"ID\" = " + str(place_id))
