@@ -46,9 +46,27 @@ def get_places():
 
 @fl_app.route('/get_place_info', methods=['GET', 'POST'])
 def get_place_info():
-    place_id = request.args.get('place_id', 12, type=int)
+    place_id = request.args.get('place_id', 0, type=int)
+
+    ftp = FTP()
+    ftp.connect('ftpupload.net', 21)
+    ftp.login('epiz_24989236', 'FIbPfZKy3F')
+    FTP_path = "/htdocs/media/img/places/" + str(place_id)
+    ftp.cwd(FTP_path)
+
+    files = ftp.nlst()
+    i = 11
+    for file in files:
+        print("Downloading..." + file)
+        file_path = os.path.join(fl_app.root_path, 'static', 'img', 'tmp_places_photo', str(i))
+        i = i + 1
+        with open(file_path, 'wb') as f:
+            ftp.retrbinary('RETR ' + file, f.write)
+    ftp.close()
+
     rec = DB.query("select * from fishing_places where \"ID\" = " + str(place_id))
     return  json.dumps(rec)
+
 
 @fl_app.route('/add_place', methods=['POST'])
 def add_place():
@@ -60,20 +78,20 @@ def add_place():
         ftp = FTP()
         ftp.connect('ftpupload.net', 21)
         ftp.login('epiz_24989236', 'FIbPfZKy3F')
-        FTP_upload_file_path = "/htdocs/media/img/places/" + str(rec[0][0])
+        FTP_path = "/htdocs/media/img/places/" + str(rec[0][0])
 
-        if not FTP_upload_file_path in ftp.nlst():
-            ftp.mkd(FTP_upload_file_path)
+        if not FTP_path in ftp.nlst():
+            ftp.mkd(FTP_path)
 
-        ftp.cwd(FTP_upload_file_path)
+        ftp.cwd(FTP_path)
 
         for photo in request.files.getlist('files[]'):
             filename = secure_filename(photo.filename)
-            upload_file_path = os.path.join(fl_app.root_path, 'static', 'img', 'tmp_places_photo', filename)
-            photo.save(upload_file_path)
-            fp = open(upload_file_path, 'rb')
+            file_path = os.path.join(fl_app.root_path, 'static', 'img', 'tmp_places_photo', filename)
+            photo.save(file_path)
+            fp = open(file_path, 'rb')
             ftp.storbinary('STOR %s' % os.path.basename(filename), fp, 1024)
-            os.remove(upload_file_path)
+            os.remove(file_path)
 
         fp.close()
 
