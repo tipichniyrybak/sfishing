@@ -38,7 +38,7 @@ class YandexMap {
                 console.log(photo_names);
                 var photosHTML = '<b>Place photos:</b> <br> ';
                 photo_names.forEach(function(element) {
-                    photosHTML = photosHTML + '<img src="/static/img/places/' + place_id + '/' + element + '" />';
+                    photosHTML = photosHTML + '<img src="/static/img/tmp_places_photo/' + element + '" />';
                 });
 
                 $("#photos").html(photosHTML);
